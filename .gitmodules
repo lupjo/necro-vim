@@ -1,0 +1,3 @@
+[submodule "necro"]
+	path = necro
+	url = git@gitlab.inria.fr:skeletons/necro.git

@@ -9,4 +9,5 @@ if exists("g:necro_vim")
 endif
 let g:necro_vim = 1
 
-function NecroParse()
+function! NecroParse()
+endfunction

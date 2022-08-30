@@ -20,7 +20,7 @@ if !g:has_necrolib
 endif
 
 let s:path = expand('<sfile>:p')
-let s:errorfile = s:path . "/errorfile"
+let s:error_file = s:path . "/errorfile"
 
 function! NecroParse()
 	" save file if necessary

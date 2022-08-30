@@ -25,5 +25,5 @@ function! NecroParse()
 	if v:shell_error == 0
 		echo "Parsing and typing successful"
 	endif
-	exe !silent "set makeprg=" . l:oldmakeprg
+	exe "set makeprg=" . l:oldmakeprg
 endfunction

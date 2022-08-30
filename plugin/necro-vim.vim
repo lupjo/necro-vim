@@ -76,13 +76,18 @@ function! NecroML(...)
 	if a:0 == 1
 		let l:write = a:1
 	else
-		let l:write = expand('%:p:r.ml')
+		let l:write = expand('%:p:r'). ".ml"
 	endif
 	if !g:has_necroml
 		echoerr "Necro ML is not installed"
 		return
 	endif
-	call system("necroml -d " . expand("%") . " -o " . l:write)
+	call system("necroml -d ".expand("%")." -o ".l:write." 2>".s:error_file)
+	if (v:shell_error != 0)
+		let l:error = readfile("s:error_file", '', 1)[0]
+		echoerr l:error
+		call system("rm -f " . s:error_file . " 2>&1")
+	endif
 endfunction
 
 function! NecroCoq(...)
@@ -93,13 +98,20 @@ function! NecroCoq(...)
 	if a:0 == 1
 		let l:write = a:1
 	else
-		let l:write = substitute(expand('%:p:r.v'), "\^\.", "\\u&")
+		let l:filename = substitute(expand('%:p:t:r'), "^.", "\\u&", "")
+		let l:write = expand('%:p:h') . "/" . l:filename . ".v"
 	endif
 	if !g:has_necrocoq
 		echoerr "Necro Coq is not installed"
 		return
 	endif
-	call system("necrocoq -d " . expand("%") . " -o " . l:write)
+	call system("necrocoq ".expand("%")." -o ".l:write." 2>". s:error_file)
+	echo l:write
+	if (v:shell_error != 0)
+		let l:error = readfile("s:error_file", '', 1)[0]
+		echoerr l:error
+		call system("rm -f " . s:error_file . " 2>&1")
+	endif
 endfunction
 
 function! NecroMLPrompt()

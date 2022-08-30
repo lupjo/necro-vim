@@ -20,26 +20,26 @@ if !g:has_necrolib
 endif
 
 let s:path = expand('<sfile>:p')
-let l:error_file = s:path . "/errorfile"
+let s:errorfile = s:path . "/errorfile"
 
 function! NecroParse()
 	" save file if necessary
 	if &autowrite && &modified | write | endif
 	" Check the validity of the error file
-	if !empty(glob(error_file))
-		echoerr error_file . " is not empty"
+	if !empty(glob(s:error_file))
+		echoerr s:error_file . " is not empty"
 		return
 	endif
 	" call necroparse and write result in error file
-	call system("necroparse -d " . expand("%") . " > " . error_file . " 2>&1")
+	call system("necroparse -d " . expand("%") . " > " . s:error_file . " 2>&1")
 	if v:shell_error == 0
 		echo "Parsing and typing successful"
 	endif
 	" create location list
 	let l:oldef = &errorformat
 	set errorformat=%EFile\ \"%f\"\\,\ line\ %l\\,\ characters\ %c-%k:,%Z%m
-	exe "cf " . error_file
+	exe "cf " . s:error_file
 	let &errorformat=l:oldef
 	" remove error file
-	call system("rm -f " . error_file . " 2>&1")
+	call system("rm -f " . s:error_file . " 2>&1")
 endfunction

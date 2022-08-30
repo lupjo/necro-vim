@@ -20,7 +20,10 @@ endif
 function! NecroParse()
 	let l:oldmakeprg = &makeprg
 	echo(l:oldmakeprg)
-	set makeprg=necroparse
+	set makeprg=set\ -o\ pipefail;\ necroparse
 	make -d %
-	exe "set makeprg=" . l:oldmakeprg
+	if v:shell_error == 0
+		echo "Parsing and typing successful"
+	endif
+	exe !silent "set makeprg=" . l:oldmakeprg
 endfunction

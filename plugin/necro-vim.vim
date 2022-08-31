@@ -45,14 +45,14 @@ let s:error_file = s:path . "/errorfile"
 function! NecroParse(...)
 	if a:0 >= 2
 		echoerr "NecroParse expects 0 or 1 argument"
-		return false
+		return v:false
 	endif
 	" save file if necessary
 	if &autowrite && &modified | write | endif
 	" Check the validity of the error file
 	if !empty(glob(s:error_file))
 		echoerr s:error_file . " is not empty"
-		return false
+		return v:false
 	endif
 	" call necroparse and write result in error file
 	call system("necroparse -d " . expand("%") . " > " . s:error_file . " 2>&1")
@@ -75,7 +75,7 @@ endfunction
 function! NecroML(...)
 	if a:0 >= 2
 		echoerr "NecroML expects 0 or 1 argument"
-		return false
+		return v:false
 	endif
 	if a:0 == 1
 		let l:write = a:1
@@ -90,8 +90,8 @@ function! NecroML(...)
 	if (v:shell_error != 0)
 		let l:error = readfile("s:error_file", '', 1)[0]
 		echoerr l:error
-		call system("rm -f " . s:error_file . " 2>&1")
 	endif
+	call system("rm -f " . s:error_file . " 2>&1")
 	if g:necro_autoopen="vertical"
 		vsplit l:write
 	elseif g:necro_autoopen="vertical"
@@ -104,7 +104,7 @@ endfunction
 function! NecroCoq(...)
 	if a:0 >= 2
 		echoerr "NecroCoq expects 0 or 1 argument"
-		return false
+		return v:false
 	endif
 	if a:0 == 1
 		let l:write = a:1
@@ -121,8 +121,8 @@ function! NecroCoq(...)
 	if (v:shell_error != 0)
 		let l:error = readfile("s:error_file", '', 1)[0]
 		echoerr l:error
-		call system("rm -f " . s:error_file . " 2>&1")
 	endif
+	call system("rm -f " . s:error_file . " 2>&1")
 	if g:necro_autoopen="vertical"
 		vsplit l:write
 	elseif g:necro_autoopen="vertical"

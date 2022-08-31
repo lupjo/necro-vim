@@ -4,10 +4,10 @@
 " Description: This plugin handles Skel files, and uses Necro to do stuff to
 " them
 
-if exists("g:necro_vim")
+if exists("g:loaded_necro_vim")
 	finish
 endif
-let g:necro_vim = 1
+let g:loaded_necro_vim = 1
 
 """" Variables
 let g:necro_autoopen="vertical"

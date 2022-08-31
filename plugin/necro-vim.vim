@@ -7,8 +7,12 @@
 if exists("g:necro_vim")
 	finish
 endif
-
 let g:necro_vim = 1
+
+"""" Variables
+let g:necro_autoopen="vertical"
+
+
 let g:necrolib_version = 
 		\ system("necroparse --version | sed \"s/^.*version: \\(.*\\)/\\1/\"")[:-2]
 let g:has_necrolib = (v:shell_error == 0)
@@ -88,6 +92,13 @@ function! NecroML(...)
 		echoerr l:error
 		call system("rm -f " . s:error_file . " 2>&1")
 	endif
+	if g:necro_autoopen="vertical"
+		vsplit l:write
+	elseif g:necro_autoopen="vertical"
+		split l:write
+	elseif g:necro_autoopen="tab"
+		tabedit l:write
+	endif
 endfunction
 
 function! NecroCoq(...)
@@ -112,6 +123,13 @@ function! NecroCoq(...)
 		echoerr l:error
 		call system("rm -f " . s:error_file . " 2>&1")
 	endif
+	if g:necro_autoopen="vertical"
+		vsplit l:write
+	elseif g:necro_autoopen="vertical"
+		split l:write
+	elseif g:necro_autoopen="tab"
+		tabedit l:write
+	endif
 endfunction
 
 function! NecroMLPrompt()
@@ -122,4 +140,14 @@ function! NecroMLPrompt()
 
 	let l:write = input("Output file: ")
 	call NecroML(l:write)
+endfunction
+
+function! NecroCoqPrompt()
+	if !g:has_necrocoq
+		echoerr "Necro Coq is not installed"
+		return
+	endif
+
+	let l:write = input("Output file: ")
+	call NecroCoq(l:write)
 endfunction

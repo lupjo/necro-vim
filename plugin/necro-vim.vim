@@ -92,11 +92,11 @@ function! NecroML(...)
 		echoerr l:error
 	endif
 	call system("rm -f " . s:error_file . " 2>&1")
-	if g:necro_autoopen="vertical"
+	if g:necro_autoopen=="vertical"
 		vsplit l:write
-	elseif g:necro_autoopen="vertical"
+	elseif g:necro_autoopen=="horizontal"
 		split l:write
-	elseif g:necro_autoopen="tab"
+	elseif g:necro_autoopen=="tab"
 		tabedit l:write
 	endif
 endfunction
@@ -123,11 +123,11 @@ function! NecroCoq(...)
 		echoerr l:error
 	endif
 	call system("rm -f " . s:error_file . " 2>&1")
-	if g:necro_autoopen="vertical"
+	if g:necro_autoopen=="vertical"
 		vsplit l:write
-	elseif g:necro_autoopen="vertical"
+	elseif g:necro_autoopen=="horizontal"
 		split l:write
-	elseif g:necro_autoopen="tab"
+	elseif g:necro_autoopen=="tab"
 		tabedit l:write
 	endif
 endfunction

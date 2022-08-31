@@ -1,0 +1,67 @@
+*necro.txt*  Vim plugin for skeletal semantics
+
+Author:  Lou Noizet <http://louis.noizet.fr>
+License: Distributed under [WTFPL](https://en.wikipedia.org/wiki/WTFPL)
+
+INTRODUCTION                                    *necro* *necro-vim*
+
+This plugin copies the syntax file defined in
+<https://gitlab.inria.fr/skeletons/necro/tools>, and
+implements several commands to interact with skeletal semantics
+
+COMMANDS                                        *necro-commands*
+
+                                                *:NecroParse*
+:NecroParse [flag]      Call necroparse on the current file.
+                        When there are warnings or errors, it creates a
+                        quickfix list. If the parsing and typing are
+                        successful, it prints a short message, unless [flag]
+                        is set to false.
+
+                                                *:NecroML*
+:NecroML [file]         Call necroml on the current file. If an argument is
+                        given, then the generated file will take that name.
+                        Otherwise, it tries to generate a name similar by
+                        replacing the .sk extension by .ml.
+                        Then the generated file is opened depending on
+                        |necro_autoopen|.
+
+                                                *:NecroCoq*
+:NecroCoq [file]        Call necrocoq on the current file. If an argument is
+                        given, then the generated file will take that name.
+                        Otherwise, it tries to generate a name similar by
+                        replacing the .sk extension by .v, and capitalizing
+                        the filename. Then the generated file is opened
+                        depending on |necro_autoopen|.
+
+                                                *:NecroMLPrompt*
+:NecroMLPrompt          Prompt for a filename, then call NecroML with the
+                        given filename
+
+                                                *:NecroCoqPrompt*
+:NecroCoqPrompt         Prompt for a filename, then call NecroCoq with the
+                        given filename
+
+
+
+GLOBAL VARIABLES                                             *necro-variables*
+
+*g:necro_autoopen*
+*g:necro_vim*
+*g:has_necrolib*
+*g:has_necroml*
+*g:has_necrocoq*
+*g:necrolib_version*
+*g:necroml_version*
+*g:necrocoq_version*
+
+To be documented
+
+
+ABOUT                                           *necro-about*
+
+This plugin is developed on GitHub:
+
+https://github.com/lupjo/necro-vim
+
+vim:tw=78:et:ft=help:norl:

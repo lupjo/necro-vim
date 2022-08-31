@@ -93,11 +93,11 @@ function! NecroML(...)
 	endif
 	call system("rm -f " . s:error_file . " 2>&1")
 	if g:necro_autoopen=="vertical"
-		vsplit l:write
+		exe "vsplit" l:write
 	elseif g:necro_autoopen=="horizontal"
-		split l:write
+		exe "split" l:write
 	elseif g:necro_autoopen=="tab"
-		tabedit l:write
+		exe "tabedit" l:write
 	endif
 endfunction
 

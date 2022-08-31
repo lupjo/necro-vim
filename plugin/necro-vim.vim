@@ -13,12 +13,18 @@ let g:necro_vim = 1
 let g:necro_autoopen="vertical"
 
 
+
+""" Detect Necro Lib, Necro ML, Necro Coq
 let g:necrolib_version = 
 		\ system("necroparse --version | sed \"s/^.*version: \\(.*\\)/\\1/\"")[:-2]
 let g:has_necrolib = (v:shell_error == 0)
+" fail without Necro Lib
 if !g:has_necrolib
 	unlet g:necrolib_version
+	echoerr "Necro Lib is not installed"
+	finish
 endif
+
 
 let g:necroml_version = 
 		\ system("necroml --version | sed \"s/^.*version: \\(.*\\)/\\1/\"")[:-2]
@@ -34,13 +40,15 @@ if !g:has_necrocoq
 	unlet g:necrocoq_version
 endif
 
-if !g:has_necrolib
-	echoerr "Necro Lib is not installed"
-	finish
-endif
-
 let s:path = expand('<sfile>:p:h')
 let s:error_file = s:path . "/errorfile"
+
+
+"""""""""""""""""""""""""""""""
+"          Functions          "
+"""""""""""""""""""""""""""""""
+
+""" Necro Parse 
 
 function! NecroParse(...)
 	if a:0 >= 2
@@ -72,6 +80,10 @@ function! NecroParse(...)
 	return l:success
 endfunction
 
+
+
+""" Necro ML 
+
 function! NecroML(...)
 	if a:0 >= 2
 		echoerr "NecroML expects 0 or 1 argument"
@@ -84,12 +96,14 @@ function! NecroML(...)
 	endif
 	if !g:has_necroml
 		echoerr "Necro ML is not installed"
-		return
+		return v:false
 	endif
 	call system("necroml -d ".expand("%")." -o ".l:write." 2>".s:error_file)
 	if (v:shell_error != 0)
 		let l:error = readfile("s:error_file", '', 1)[0]
 		echoerr l:error
+		call system("rm -f " . s:error_file . " 2>&1")
+		return v:false
 	endif
 	call system("rm -f " . s:error_file . " 2>&1")
 	if g:necro_autoopen=="vertical"
@@ -99,7 +113,21 @@ function! NecroML(...)
 	elseif g:necro_autoopen=="tab"
 		exe "tabedit" l:write
 	endif
+	return v:true
 endfunction
+
+function! NecroMLPrompt()
+	if !g:has_necroml
+		echoerr "Necro ML is not installed"
+		return
+	endif
+	let l:write = input("Output file: ")
+	call NecroML(l:write)
+endfunction
+
+
+
+""" Necro Coq
 
 function! NecroCoq(...)
 	if a:0 >= 2
@@ -121,6 +149,8 @@ function! NecroCoq(...)
 	if (v:shell_error != 0)
 		let l:error = readfile("s:error_file", '', 1)[0]
 		echoerr l:error
+		call system("rm -f " . s:error_file . " 2>&1")
+		return v:false
 	endif
 	call system("rm -f " . s:error_file . " 2>&1")
 	if g:necro_autoopen=="vertical"
@@ -130,16 +160,7 @@ function! NecroCoq(...)
 	elseif g:necro_autoopen=="tab"
 		exe "tabedit" l:write
 	endif
-endfunction
-
-function! NecroMLPrompt()
-	if !g:has_necroml
-		echoerr "Necro ML is not installed"
-		return
-	endif
-
-	let l:write = input("Output file: ")
-	call NecroML(l:write)
+	return v:true
 endfunction
 
 function! NecroCoqPrompt()
@@ -147,7 +168,17 @@ function! NecroCoqPrompt()
 		echoerr "Necro Coq is not installed"
 		return
 	endif
-
 	let l:write = input("Output file: ")
 	call NecroCoq(l:write)
 endfunction
+
+
+""""""""""""""""""""""""""""""
+"          Commands          "
+""""""""""""""""""""""""""""""
+
+command! -nargs=* NecroParse call necro-vim#NecroParse(<args>)
+command! -nargs=* NecroML call necro-vim#NecroML(<args>)
+command! -nargs=* NecroCoq call necro-vim#NecroCoq(<args>)
+command! -nargs=0 NecroMLPrompt call necro-vim#NecroMLPrompt(>)
+command! -nargs=0 NecroCoqPrompt call necro-vim#NecroCoqPrompt()

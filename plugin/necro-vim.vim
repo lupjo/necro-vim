@@ -177,8 +177,8 @@ endfunction
 "          Commands          "
 """"""""""""""""""""""""""""""
 
-command! -nargs=* NecroParse call necro-vim#NecroParse(<args>)
-command! -nargs=* NecroML call necro-vim#NecroML(<args>)
-command! -nargs=* NecroCoq call necro-vim#NecroCoq(<args>)
-command! -nargs=0 NecroMLPrompt call necro-vim#NecroMLPrompt(>)
-command! -nargs=0 NecroCoqPrompt call necro-vim#NecroCoqPrompt()
+command! -nargs=* NecroParse call NecroParse(<args>)
+command! -nargs=* NecroML call NecroML(<args>)
+command! -nargs=* NecroCoq call NecroCoq(<args>)
+command! -nargs=0 NecroMLPrompt call NecroMLPrompt()
+command! -nargs=0 NecroCoqPrompt call NecroCoqPrompt()

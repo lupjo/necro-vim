@@ -44,7 +44,7 @@ COMMANDS                                        *necro-commands*
 
 
 
-GLOBAL VARIABLES                                             *necro-variables*
+GLOBAL VARIABLES                                *necro-variables*
 
 *g:necro_autoopen*
 *g:necro_vim*
@@ -56,6 +56,13 @@ GLOBAL VARIABLES                                             *necro-variables*
 *g:necrocoq_version*
 
 To be documented
+
+
+
+MAPPINGS                                        *necro-maps*
+
+For now, no mappings are present by default, you can always add your own.
+
 
 
 ABOUT                                           *necro-about*

@@ -173,6 +173,7 @@ function! NecroCoqPrompt()
 endfunction
 
 
+
 """"""""""""""""""""""""""""""
 "          Commands          "
 """"""""""""""""""""""""""""""
@@ -182,3 +183,10 @@ command! -nargs=* NecroML call NecroML(<args>)
 command! -nargs=* NecroCoq call NecroCoq(<args>)
 command! -nargs=0 NecroMLPrompt call NecroMLPrompt()
 command! -nargs=0 NecroCoqPrompt call NecroCoqPrompt()
+
+
+
+""""""""""""""""""""""""""""""
+"          Commands          "
+""""""""""""""""""""""""""""""
+

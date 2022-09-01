@@ -104,7 +104,7 @@ function! NecroML(...)
 	endif
 	call system(g:necroml_cmd . " -d ".expand("%")." -o ".l:write." 2>".s:error_file)
 	if (v:shell_error != 0)
-		let l:error = readfile("s:error_file", '', 1)[0]
+		let l:error = readfile(s:error_file, '', 1)[0]
 		echoerr l:error
 		call system("rm -f " . s:error_file . " 2>&1")
 		return v:false
@@ -151,7 +151,7 @@ function! NecroCoq(...)
 	call system(g:necrocoq_cmd." ".expand("%")." -o ".l:write." 2>". s:error_file)
 	echo l:write
 	if (v:shell_error != 0)
-		let l:error = readfile("s:error_file", '', 1)[0]
+		let l:error = readfile(s:error_file, '', 1)[0]
 		echoerr l:error
 		call system("rm -f " . s:error_file . " 2>&1")
 		return v:false

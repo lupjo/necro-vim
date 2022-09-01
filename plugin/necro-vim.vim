@@ -9,14 +9,18 @@ if exists("g:loaded_necro_vim")
 endif
 let g:loaded_necro_vim = 1
 
+
 """" Variables
-let g:necro_autoopen="vertical"
+if !exists("g:necro_autoopen") | let g:necro_autoopen = "vertical"   | endif
+if !exists("g:necroparse_cmd") | let g:necroparse_cmd = "necroparse" | endif
+if !exists("g:necroml_cmd")    | let g:necroml_cmd    = "necroml"    | endif
+if !exists("g:necrocoq_cmd")   | let g:necrocoq_cmd   = "necrocoq"   | endif
 
 
 
 """ Detect Necro Lib, Necro ML, Necro Coq
 let g:necrolib_version = 
-		\ system("necroparse --version | sed \"s/^.*version: \\(.*\\)/\\1/\"")[:-2]
+		\ system(g:necroparse_cmd . "--version | sed \"s/^.*version: \\(.*\\)/\\1/\"")[:-2]
 let g:has_necrolib = (v:shell_error == 0)
 " fail without Necro Lib
 if !g:has_necrolib
@@ -27,14 +31,14 @@ endif
 
 
 let g:necroml_version = 
-		\ system("necroml --version | sed \"s/^.*version: \\(.*\\)/\\1/\"")[:-2]
+		\ system(g:necroml_cmd . " --version | sed \"s/^.*version: \\(.*\\)/\\1/\"")[:-2]
 let g:has_necroml = (v:shell_error == 0)
 if !g:has_necroml
 	unlet g:necroml_version
 endif
 
 let g:necrocoq_version = 
-		\ system("necrocoq --version | sed \"s/^.*version: \\(.*\\)/\\1/\"")[:-2]
+		\ system(g:necrocoq_cmd . " --version | sed \"s/^.*version: \\(.*\\)/\\1/\"")[:-2]
 let g:has_necrocoq = (v:shell_error == 0)
 if !g:has_necrocoq
 	unlet g:necrocoq_version
@@ -63,7 +67,7 @@ function! NecroParse(...)
 		return v:false
 	endif
 	" call necroparse and write result in error file
-	call system("necroparse -d " . expand("%") . " > " . s:error_file . " 2>&1")
+	call system(g:necroparse_cmd . " -d " . expand("%") . " > " . s:error_file . " 2>&1")
 	if v:shell_error == 0 && a:0 == 0
 		echo "Parsing and typing successful"
 	elseif v:shell_error == 0 && a:0 == 1 && a:1
@@ -98,7 +102,7 @@ function! NecroML(...)
 		echoerr "Necro ML is not installed"
 		return v:false
 	endif
-	call system("necroml -d ".expand("%")." -o ".l:write." 2>".s:error_file)
+	call system(g:necroml_cmd . " -d ".expand("%")." -o ".l:write." 2>".s:error_file)
 	if (v:shell_error != 0)
 		let l:error = readfile("s:error_file", '', 1)[0]
 		echoerr l:error
@@ -144,7 +148,7 @@ function! NecroCoq(...)
 		echoerr "Necro Coq is not installed"
 		return
 	endif
-	call system("necrocoq ".expand("%")." -o ".l:write." 2>". s:error_file)
+	call system(g:necrocoq_cmd." ".expand("%")." -o ".l:write." 2>". s:error_file)
 	echo l:write
 	if (v:shell_error != 0)
 		let l:error = readfile("s:error_file", '', 1)[0]

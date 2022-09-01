@@ -3,13 +3,15 @@
 Author:  Lou Noizet <http://louis.noizet.fr>
 License: Distributed under [WTFPL](https://en.wikipedia.org/wiki/WTFPL)
 
-INTRODUCTION                                    *necro* *necro-vim*
+-----
+Introduction                                    *necro* *necro-vim*
 
 This plugin copies the syntax file defined in
 <https://gitlab.inria.fr/skeletons/necro/tools>, and
 implements several commands to interact with skeletal semantics
 
-COMMANDS                                        *necro-commands*
+-----
+Commands                                        *necro-commands*
 
                                                 *:NecroParse*
 :NecroParse [flag]      Call necroparse on the current file.
@@ -44,28 +46,45 @@ COMMANDS                                        *necro-commands*
 
 
 
-GLOBAL VARIABLES                                *necro-variables*
-
-*g:necro_autoopen*
-*g:necro_vim*
-*g:has_necrolib*
-*g:has_necroml*
-*g:has_necrocoq*
-*g:necrolib_version*
-*g:necroml_version*
-*g:necrocoq_version*
-
-To be documented
+-----
+Global Variables                                *necro-variables*
 
 
+                                                *g:necro_autoopen*
+'g:necro_autoopen'  string  (default "vertical")
+Set this variable to choose where NecroML and NecroCoq produced files open.
+Possible options are "vertical", "horizontal"
 
-MAPPINGS                                        *necro-maps*
+
+                                                *g:necroparse_cmd*
+'g:necroparse_cmd'  string  (default "necroparse")
+Choose what command is used to call necroparse. For instance, if you have a
+local version of necro installed, you may want to >
+    let g:necroparse_cmd="/path/to/local/install/necroparse"
+<
+                                                *g:necroml_cmd*
+'g:necroml'  string  (default "necroml")
+Choose what command is used to call necroml. For instance, if you have a
+local version of necro installed, you may want to >
+    let g:necroml="/path/to/local/install/necroml"
+<
+                                                *g:necrocoq_cmd*
+'g:necrocoq'  string  (default "necrocoq")
+Choose what command is used to call necrocoq. For instance, if you have a
+local version of necro installed, you may want to >
+    let g:necrocoq="/path/to/local/install/necrocoq"
+<
+
+
+-----
+Mappings                                        *necro-maps*
 
 For now, no mappings are present by default, you can always add your own.
 
 
 
-ABOUT                                           *necro-about*
+-----
+About                                           *necro-about*
 
 This plugin is developed on GitHub:
 

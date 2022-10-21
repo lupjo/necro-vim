@@ -20,7 +20,7 @@ if !exists("g:necrocoq_cmd")   | let g:necrocoq_cmd   = "necrocoq"   | endif
 
 """ Detect Necro Lib, Necro ML, Necro Coq
 let g:necrolib_version = 
-		\ system(g:necroparse_cmd . "--version | sed \"s/^.*version: \\(.*\\)/\\1/\"")[:-2]
+		\ system(g:necroparse_cmd . " --version | sed \"s/^.*version: \\(.*\\)/\\1/\"")[:-2]
 let g:has_necrolib = (v:shell_error == 0)
 " fail without Necro Lib
 if !g:has_necrolib

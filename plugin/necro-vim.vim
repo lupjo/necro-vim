@@ -77,6 +77,7 @@ function! NecroParse(...)
 	" create location list
 	let l:oldef = &errorformat
 	set errorformat=%EFile\ \"%f\"\\,\ line\ %l\\,\ characters\ %c-%k:,%Z%m
+	set errorformat+=%EFile\ \"%f\"\\,\ lines\ %l-%e\\,\ characters\ %c-%k:,%Z%m
 	exe "cf " . s:error_file
 	let &errorformat=l:oldef
 	" remove error file

@@ -1,6 +1,6 @@
 " Title: Necro Vim
-" Author: Lou Noizet
-" Maintainer: Lou Noizet (lou@noizet.fr)
+" Author: Victoire Noizet
+" Maintainer: Victoire Noizet (victoire@noizet.fr)
 " Description: This plugin handles Skel files, and uses Necro to do stuff to
 " them
 
